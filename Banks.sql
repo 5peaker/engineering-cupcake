@@ -170,20 +170,23 @@ FROM (
 
 SELECT * FROM TransactionHistory;
 
- -- 11
- 
-SELECT AccountNumber, UsageDate, UsageTime, Amount, MerchantName
-FROM CardUsageHistory
-WHERE MONTH(UsageDate) = 8
-ORDER BY Amount DESC;
-
-INSERT INTO TransactionHistory (AccountNumber, TransactionType, TransactionDate, TransactionTime, Amount, Description)
-SELECT AccountNumber, '출금', '2024-08-31', '18:00:00', TotalCardUsage, '8월 카드값 출금'
-FROM (
-    SELECT AccountNumber, SUM(Amount) AS TotalCardUsage
-    FROM CardUsageHistory
-    WHERE MONTH(UsageDate) = 8
+WITH transaction_balances AS (
+    SELECT AccountNumber, 
+           SUM(CASE WHEN TransactionType = '입금' THEN Amount ELSE 0 END) - 
+           SUM(CASE WHEN TransactionType = '출금' THEN Amount ELSE 0 END) AS TotalTransactionBalance
+    FROM TransactionHistory
     GROUP BY AccountNumber
-) AS August;
+),
+card_usage_totals AS (
+    SELECT AccountNumber, 
+           SUM(Amount) AS TotalCardUsage
+    FROM CardUsageHistory
+    GROUP BY AccountNumber
+)
+UPDATE CustomerAccount ca
+LEFT JOIN transaction_balances tb ON ca.AccountNumber = tb.AccountNumber
+LEFT JOIN card_usage_totals cu ON ca.AccountNumber = cu.AccountNumber
+SET ca.Balance = (tb.TotalTransactionBalance - cu.TotalCardUsage);
 
-SELECT * FROM TransactionHistory;
+-- 업데이트된 CustomerAccount 테이블 조회
+SELECT * FROM CustomerAccount;
