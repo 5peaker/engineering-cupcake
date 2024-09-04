@@ -45,23 +45,19 @@ while True:
         out.write(frame)
         cv2.imshow('frame', frame)
         
-        # Add this line to process window events and check for "q" key press
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         
-        # Check if 60 seconds have passed
         if time.time() - start_time >= 60:
             out.release()
             out, start_time, current_hour, root_folder = start_new_recording()
         
-        # Check if the hour has changed
         new_hour = datetime.now().strftime('%Y-%m-%d_%H')
         if new_hour != current_hour:
             current_hour = new_hour
             out.release()
             out, start_time, current_hour, root_folder = start_new_recording()
         
-        # Check if the root folder size exceeds 500MB
         if get_folder_size(root_folder) > 500 * 1024 * 1024:
             delete_oldest_folder(root_folder)
     else:
