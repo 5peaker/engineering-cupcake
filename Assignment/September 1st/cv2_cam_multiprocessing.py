@@ -35,7 +35,7 @@ def start_new_recording(queue):
         video_folder = os.path.join(root_folder, current_hour)
         os.makedirs(video_folder, exist_ok=True)
         video_name = os.path.join(video_folder, f"{current_time}.avi")
-        return cv2.VideoWriter(video_name, fourcc, 30.0, (1280, 720)), time.time(), current_hour, root_folder
+        return cv2.VideoWriter(video_name, fourcc, 30.0, (640, 480)), time.time(), current_hour, root_folder
 
     out, start_time, current_hour, root_folder = create_video_writer()
 
