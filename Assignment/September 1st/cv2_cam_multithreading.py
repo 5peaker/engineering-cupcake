@@ -28,7 +28,7 @@ def delete_oldest_folder(root_folder):
             os.rmdir(oldest_folder)
 
 def start_new_recording():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
     def create_video_writer():
