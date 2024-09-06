@@ -49,6 +49,12 @@ def start_new_recording():
     while True:
         ret, frame = cap.read()
         if ret:
+            video_folder = os.path.join(root_folder, current_hour)
+            if not os.path.exists(video_folder):
+                os.makedirs(video_folder, exist_ok=True)
+                video_name = os.path.join(video_folder, f"{datetime.now().strftime('%Y-%m-%d_%H-%M')}.avi")
+                out = cv2.VideoWriter(video_name, fourcc, 30.0, (640, 480))
+
             out.write(frame)
             cv2.imshow('frame', frame)
             
@@ -61,11 +67,11 @@ def start_new_recording():
             
             new_hour = datetime.now().strftime('%Y-%m-%d_%H')
             if new_hour != current_hour:
-                current_hour = new_hour
+                current_hour = new_hourqqqqqqqqqqqqq
                 out.release()
                 out, start_time, current_hour, root_folder = create_video_writer()
             
-            if get_folder_size(root_folder) > 500 * 1024 * 1024:
+            if get_folder_size(root_folder) > 300 * 1024 * 1024:
                 Thread(target=delete_oldest_folder, args=(root_folder,)).start()
         else:
             break
