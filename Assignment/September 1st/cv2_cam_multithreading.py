@@ -67,7 +67,7 @@ def start_new_recording():
             
             new_hour = datetime.now().strftime('%Y-%m-%d_%H')
             if new_hour != current_hour:
-                current_hour = new_hourqqqqqqqqqqqqq
+                current_hour = new_hour
                 out.release()
                 out, start_time, current_hour, root_folder = create_video_writer()
             
