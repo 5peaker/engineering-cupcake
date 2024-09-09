@@ -15,7 +15,7 @@ def draw_shape(event, x, y, flags, param):
             cv2.polylines(img, [np.array(points)], isClosed=True, color=(255, 0, 0), thickness=2)
             points = []
 
-    # 오른쪽 마우스 입력하면 반지름 10을 가지는 원 출력
+    # 오른쪽 마우스 입력하면 반지름 15을 가지는 원 출력
     elif event == cv2.EVENT_RBUTTONDOWN:
         cv2.circle(img, (x, y), 10, (0, 255, 0), -1)
 
@@ -35,7 +35,7 @@ while True:
 resized_img = cv2.resize(img, (256, 256), interpolation=cv2.INTER_AREA)
 resized_img_linear = cv2.resize(img, (256, 256), interpolation=cv2.INTER_LINEAR)
 
-# 결과 이미지 표시
+# 리사이징과 필터링 거친 이미지들 출력하여 비교
 cv2.imshow('Resized by INTER_AREA', resized_img)
 cv2.imshow('Resized by INTER_LINEAR', resized_img_linear)
 cv2.waitKey(0)
