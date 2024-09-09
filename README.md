@@ -1,40 +1,28 @@
-# engineering-cupcake
+===============
+Engineering-Cupcakes
+===============
 
-<!-- BEGINNING OF THE REPO -->
-<br />
-<div align="center">
-  <h3 align="center">Engineering Cupcake</h3>
+.. image:: https://img.shields.io/pypi/v/learningrunning.svg
+        :target: https://pypi.python.org/pypi/learningrunning
 
-  <p align="center">
-    I'm studying Engineering! 
-</div>
+.. image:: https://img.shields.io/travis/5peaker/learningrunning.svg
+        :target: https://travis-ci.com/5peaker/learningrunning
 
-<!-- ABOUT CURRENT STATUS -->
-### Current Status
+.. image:: https://readthedocs.org/projects/learningrunning/badge/?version=latest
+        :target: https://learningrunning.readthedocs.io/en/latest/?version=latest
+        :alt: Documentation Status
 
-In campus, everyone is waiting for the transition to openCV.
-Sadly, however, I am not quite interested in the subject for now.
-New Repo wouldn't focus on image processing. GCP and AWS (in free tier, obviously) will be new weapons. 
+Repository for practicing purpose
 
-Let's take course for something <i>interesting</i>, shall we? -Celeste
+Features
+--------
 
-<!-- BUY ME A COFFEE -->
+* TODO
 
-### Buy me a coffee
+Credits
+-------
 
-Whether you use this project, have learned something from it, or just like it, please consider supporting it via "Buy Me a Coffee".
-This is currently just a placeholder, so you don't need to look on this! (Link is a vaild one, though)
+This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
-<a href="https://www.buymeacoffee.com/madamania" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-
-## Roadmap
-
-- [x] Be friendly with the tools I need (like: Docker, Kubernetes)
-- [x] Learning additional Python modules (like: Pandas, Scikit-Learn)
-- [X] Begin a project on my own 
-- [ ] Finish the project & Add "components" document for further supports and possibilities
-- [] Start a journey as the engineer
-    - [ ] Working on a company
-    - [ ] Working for myself
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
