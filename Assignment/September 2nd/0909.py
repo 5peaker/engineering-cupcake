@@ -36,7 +36,7 @@ resized_img = cv2.resize(img, (256, 256), interpolation=cv2.INTER_AREA)
 resized_img_linear = cv2.resize(img, (256, 256), interpolation=cv2.INTER_LINEAR)
 
 # 결과 이미지 표시
-cv2.imshow('Resized Image (INTER_AREA)', resized_img)
-cv2.imshow('Resized Image (INTER_LINEAR)', resized_img_linear)
+cv2.imshow('Resized by INTER_AREA', resized_img)
+cv2.imshow('Resized by INTER_LINEAR', resized_img_linear)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
