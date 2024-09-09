@@ -8,14 +8,16 @@ points = []
 def draw_shape(event, x, y, flags, param):
     global points
 
+    # 왼쪽 마우스 버튼 클릭하면 좌표를 저장하고, 네 번째 좌표 입력 후 선으로 그어 사각형 출력
     if event == cv2.EVENT_LBUTTONDOWN:
         points.append((x, y))
         if len(points) == 4:
             cv2.polylines(img, [np.array(points)], isClosed=True, color=(255, 0, 0), thickness=2)
             points = []
 
+    # 오른쪽 마우스 입력하면 반지름 10을 가지는 원 출력
     elif event == cv2.EVENT_RBUTTONDOWN:
-        cv2.circle(img, (x, y), 4, (0, 255, 0), -1)
+        cv2.circle(img, (x, y), 10, (0, 255, 0), -1)
 
 # 빈 이미지 생성
 img = np.zeros((512, 512, 3), np.uint8)
@@ -25,6 +27,7 @@ cv2.setMouseCallback('image', draw_shape)
 while True:
     cv2.imshow('image', img)
     k = cv2.waitKey(1) & 0xFF
+    # ESC 키를 누르면 종료
     if k == 27:
         break
 
