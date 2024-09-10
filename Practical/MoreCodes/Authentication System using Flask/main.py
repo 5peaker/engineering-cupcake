@@ -1,25 +1,31 @@
+
+# 필요한 패키지 부르기(Flask)
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import ValidationError, InputRequired, Length
 from flask_bcrypt import Bcrypt
 
+# 필요한 패키지 마저 부르기
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import ValidationError, InputRequired, Length
+
+# Flask 기본 설정
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 bcrypt = Bcrypt(app)
 
+# 로그인 매니저 호출, 초기화
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+# 로그인 매니저 사용, 회원가입 및 로그인 폼 생성
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -41,6 +47,7 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
 
+# 서버 단위에서 메인 페이지와 대시보드 등 정의
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -50,12 +57,14 @@ def home():
 def dashboard():
     return render_template('dashboard.html')
 
+# 로그아웃 기능
 @app.route('/logout', methods=["GET", "POST"])
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
+# 로그인 기능
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -70,16 +79,18 @@ def login():
                 login_user(user)
                 return redirect(url_for('dashboard'))
             else:
-                flash("Incorrect Password! Please Try again")
+                flash("비밀번호 오류!")
         else:
-            flash("This email is not registered. Try Signing Up!")
+            flash("등록되지 않은 사용자입니다!")
 
     return render_template('login.html', form=form)
 
+# 회원가입 기능
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
+    
     form = RegistrationForm()
 
     if form.validate_on_submit():
