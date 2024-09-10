@@ -80,6 +80,7 @@ def start_new_recording():
     out.release()
     cv2.destroyAllWindows()
 
+# 멀티스레딩 사용한 메인 함수 동작
 if __name__ == '__main__':
     recording_thread = Thread(target=start_new_recording)
     recording_thread.start()

@@ -25,7 +25,7 @@ def delete_oldest_folder(root_folder):
 
 def start_new_recording(queue):
     cap = cv2.VideoCapture(0)
-    fourcc = cv2.VideoWriter_fourcc(*'MJPG')  # Use MJPG codec
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
     def create_video_writer():
         current_time = datetime.now().strftime('%Y-%m-%d_%H-%M')
@@ -45,24 +45,20 @@ def start_new_recording(queue):
             out.write(frame)
             cv2.imshow('frame', frame)
             
-            # Add this line to process window events and check for "q" key press
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 queue.put('stop')
                 break
             
-            # Check if 60 seconds have passed
             if time.time() - start_time >= 60:
                 out.release()
                 out, start_time, current_hour, root_folder = create_video_writer()
             
-            # Check if the hour has changed
             new_hour = datetime.now().strftime('%Y-%m-%d_%H')
             if new_hour != current_hour:
                 current_hour = new_hour
                 out.release()
                 out, start_time, current_hour, root_folder = create_video_writer()
             
-            # Check if the root folder size exceeds 500MB
             if get_folder_size(root_folder) > 500 * 1024 * 1024:
                 queue.put('delete_oldest')
         else:
@@ -80,6 +76,7 @@ def manage_folders(queue):
         elif message == 'delete_oldest':
             delete_oldest_folder("BB")
 
+# 멀티프로세싱 사용하여 메인 함수 동작
 if __name__ == '__main__':
     queue = Queue()
     recording_process = Process(target=start_new_recording, args=(queue,))

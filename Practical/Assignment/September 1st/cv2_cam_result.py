@@ -4,8 +4,11 @@ import os
 from datetime import datetime
 
 cap = cv2.VideoCapture(0)
+
+# 코덱 정의
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
+# 녹화를 시작하는 함수
 def start_new_recording():
     current_hour = datetime.now().strftime('%Y-%m-%d_%H')
     os.makedirs(current_hour, exist_ok=True)
@@ -20,16 +23,15 @@ while True:
         out.write(frame)
         cv2.imshow('frame', frame)
         
-        # Add this line to process window events and check for "q" key press
+        # "q" 키를 누르면 화면 녹화를 중단 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         
-        # Check if 60 seconds have passed
+        # 녹화 시간으로부터 60초가 지났는지를 체크하여, 60초마다 새로운 영상으로 변경
         if time.time() - start_time >= 60:
             out.release()
             out, start_time, current_hour = start_new_recording()
         
-        # Check if the hour has changed
         new_hour = datetime.now().strftime('%Y-%m-%d_%H')
         if new_hour != current_hour:
             current_hour = new_hour
